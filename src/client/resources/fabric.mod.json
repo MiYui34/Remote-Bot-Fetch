@@ -1,0 +1,48 @@
+{
+  "schemaVersion": 1,
+  "id": "${id}",
+  "version": "${version}",
+  "name": "${name}",
+  "description": "Client side fake player item retrieval companion of the Remote Bot Fetch server mod.",
+  "authors": ["bdbmzwsc", "jasonxue", "stupidOIO", "小柠檬lemon酱"],
+  "contact": {
+    "homepage": "${website}",
+    "issues": "${issues}",
+    "sources": "${source}"
+  },
+  "license": "GPL-3.0-only",
+  "icon": "icon.png",
+  "environment": "client",
+  "entrypoints": {
+    "client": ["com.sguserver.remotebotfetch.client.ClientMod"],
+    "modmenu": ["com.sguserver.remotebotfetch.client.config.ModMenu"]
+  },
+  "mixins": ["remote-bot-fetch-client.mixins.json"],
+  "depends": {
+    "fabricloader": "${fabricloader_dependency}",
+    "minecraft": "${minecraft_dependency}",
+    "malilib": "*",
+    "carpet": "*",
+    "fabric-api": "*",
+    "fabric-lifecycle-events-v1": "*",
+    "fabric-message-api-v1": "*"
+  },
+  "suggests": {
+    "remote-bot-fetch-server": "*",
+    "litematica": "*",
+    "modmenu": "*"
+  },
+  "custom": {
+    "modmenu": {
+      "parent": "malilib",
+      "links": {
+        "modmenu.website": "${website}",
+        "modmenu.modrinth": "${modrinth}",
+        "modmenu.curseforge": "${curseforge}",
+        "modmenu.github_releases": "${source}/releases",
+        "modmenu.issues": "${issues}"
+      },
+      "update_checker": true
+    }
+  }
+}

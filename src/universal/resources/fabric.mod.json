@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "id": "${id}",
+  "version": "${version}",
+  "name": "${name}",
+  "description": "${description}",
+  "authors": ["jasonxue", "小柠檬lemon酱"],
+  "contact": {
+    "homepage": "${website}",
+    "issues": "${issues}",
+    "sources": "${source}"
+  },
+  "license": "GPL-3.0-only",
+  "icon": "icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": ["com.sguserver.remotebotfetch.Mod"],
+    "preLaunch": ["com.sguserver.remotebotfetch.PreLaunch"],
+    "client": ["com.sguserver.remotebotfetch.client.ClientBootstrap"],
+    "modmenu": ["com.sguserver.remotebotfetch.client.config.ModMenu"]
+  },
+  "mixins": ["remote-bot-fetch-server.mixins.json", "remote-bot-fetch-client.mixins.json"],
+  "accessWidener": "remote-bot-fetch-server.accesswidener",
+  "depends": {
+    "fabricloader": "${fabricloader_dependency}",
+    "minecraft": "${minecraft_dependency}",
+    "carpet": "*"
+  },
+  "suggests": {
+    "malilib": "*",
+    "fabric-api": "*",
+    "litematica": "*",
+    "modmenu": "*"
+  },
+  "custom": {
+    "modmenu": {
+      "links": {
+        "modmenu.website": "${website}",
+        "modmenu.github_releases": "${source}/releases",
+        "modmenu.issues": "${issues}"
+      },
+      "update_checker": false
+    }
+  }
+}

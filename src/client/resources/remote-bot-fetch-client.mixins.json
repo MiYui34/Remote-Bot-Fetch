@@ -1,0 +1,15 @@
+{
+  "required": true,
+  "package": "com.sguserver.remotebotfetch.client.mixin",
+  "compatibilityLevel": "{{COMPATIBILITY_LEVEL}}",
+  "plugin": "com.sguserver.remotebotfetch.client.ClientMixinPlugin",
+  "client": [
+    {{RBF_CLIENT_MIXINS}}
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "overwrites": {
+    "requireAnnotations": true
+  }
+}

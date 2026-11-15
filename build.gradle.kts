@@ -1,3 +1,6 @@
+import com.github.gradle.node.NodeExtension
+import com.github.gradle.node.pnpm.task.PnpmTask
+
 plugins {
     `maven-publish`
     signing
@@ -11,6 +14,7 @@ plugins {
     alias(libs.plugins.yamlang) apply false
     alias(libs.plugins.spotless)
     alias(libs.plugins.maven.publish)
+    alias(libs.plugins.node.gradle)
 }
 
 repositories {
@@ -33,14 +37,14 @@ preprocess {
     val mc260200 = createNode("26.2", 26_02_00, "")
     val mc260300 = createNode("26.3", 26_03_00, "")
 
-    mc1211.link(mc1213)
-    mc1213.link(mc1214)
+    mc1211.link(mc1213, file("mappings/mapping-1.21.1-1.21.3.txt"))
+    mc1213.link(mc1214, file("mappings/mapping-1.21.3-1.21.4.txt"))
     mc1214.link(mc1215)
     mc1215.link(mc1218)
     mc1218.link(mc12110)
     mc12110.link(mc12111, file("mappings/mapping-1.21.10-1.21.11.txt"))
-    mc12111.link(mc260101)
-    mc260101.link(mc260200)
+    mc12111.link(mc260101, file("mappings/mapping-1.21.11-26.1.2.txt"))
+    mc260101.link(mc260200, file("mappings/mapping-26.1.2-26.2.txt"))
     mc260200.link(mc260300)
 
     // See https://github.com/Fallen-Breath/fabric-mod-template/blob/1d72d77a1c5ce0bf060c2501270298a12adab679/build.gradle#L55-L63

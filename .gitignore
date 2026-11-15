@@ -47,3 +47,10 @@ __pycache__
 
 # gemini
 .gemini/
+
+# local build output / scratch
+dist/
+_pr/
+_lt/
+_litematica121/
+*.log

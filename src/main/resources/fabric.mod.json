@@ -4,7 +4,7 @@
   "version": "${version}",
   "name": "${name}",
   "description": "${description}",
-  "authors": ["Antideath", "jasonxue"],
+  "authors": ["jasonxue"],
   "contact": {
     "homepage": "${website}",
     "issues": "${issues}",
@@ -13,32 +13,26 @@
   "license": "GPL-3.0-only",
   "environment": "*",
   "entrypoints": {
-    "client": ["com.sguserver.remotebotfetch.client.ClientMod"],
-    "modmenu": ["com.sguserver.remotebotfetch.client.config.ModMenu"]
+    "main": ["com.sguserver.remotebotfetch.Mod"],
+    "preLaunch": ["com.sguserver.remotebotfetch.PreLaunch"]
   },
-  "mixins": ["remote-bot-fetch.mixins.json"],
+  "mixins": ["remote-bot-fetch-server.mixins.json"],
+  "accessWidener": "remote-bot-fetch-server.accesswidener",
   "depends": {
     "fabricloader": "*",
     "minecraft": "${minecraft_dependency}",
-    "remote-bot-fetch-server": "*",
-    "malilib": "*",
-    "fabric-lifecycle-events-v1": "*",
-    "fabric-message-api-v1": "*"
-  },
-  "suggests": {
-    "litematica": "*",
-    "modmenu": "*"
+    "carpet": "*"
   },
   "custom": {
     "modmenu": {
+      "badges": ["library"],
+      "parent": "remote-bot-fetch-client",
       "links": {
         "modmenu.website": "${website}",
-        "modmenu.modrinth": "${modrinth}",
-        "modmenu.curseforge": "${curseforge}",
         "modmenu.github_releases": "${source}/releases",
         "modmenu.issues": "${issues}"
       },
-      "update_checker": true
+      "update_checker": false
     }
   }
 }

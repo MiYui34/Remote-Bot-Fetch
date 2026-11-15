@@ -1,0 +1,181 @@
+package com.sguserver.remotebotfetch.client.util;
+
+import com.mojang.authlib.GameProfile;
+import fi.dy.masa.malilib.util.InventoryUtils;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.multiplayer.PlayerInfo;
+import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.ShulkerBoxBlock;
+import net.minecraft.world.phys.EntityHitResult;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Predicate;
+
+public class PlayerUtils {
+    public static int getInventoryItemCount(Item item) {
+        return getInventory().stream().filter(stack -> stack.is(item)).mapToInt(ItemStack::getCount).sum();
+    }
+
+    public static List<ItemStack> getInventory() {
+        LocalPlayer player = MCUtils.getLocalPlayer();
+        if (player == null) {
+            return List.of();
+        }
+//#if MC>=12105
+        return player.getInventory().getNonEquipmentItems();
+//#else
+        //$$ return player.getInventory().items;
+//#endif
+    }
+
+    public static ItemStack getItemStack(int slotIndex) {
+        Player player = MCUtils.getLocalPlayer();
+        return player == null ? ItemStack.EMPTY : player.getInventory().getItem(slotIndex);
+    }
+
+    public static List<Integer> getAllBoxIndex(int minIndex, int maxIndex) {
+        return getAllItemIndex(minIndex, maxIndex, PlayerUtils::isShulkerBox);
+    }
+
+    public static List<Integer> getAllItemIndex(int minIndex, int maxIndex, Predicate<ItemStack> filter) {
+        List<Integer> results = new ArrayList<>();
+        Inventory inventory = MCUtils.getLocalPlayer().getInventory();
+
+        for (int i = minIndex; i < maxIndex; i++) {
+            ItemStack stack = inventory.getItem(i);
+            if (filter.test(stack))
+                results.add(i);
+        }
+
+        return results;
+    }
+
+    public static List<Integer> getNotEmptyBoxIndexes(List<Integer> shulkerBoxIndexes) {
+        Player player = MCUtils.getLocalPlayer();
+        List<Integer> results = new ArrayList<>();
+
+        for (int i : shulkerBoxIndexes) {
+            List<ItemStack> boxStacks = getBoxItemStacks(player.getInventory().getItem(i));
+            if (!boxStacks.stream().filter(itemStack -> !itemStack.isEmpty()).toList().isEmpty()) {
+                results.add(i);
+            }
+        }
+
+        return results;
+    }
+
+    public static List<ItemStack> getBoxItemStacks(ItemStack box) {
+        return InventoryUtils.getStoredItems(box, 27);
+    }
+
+    public static boolean isBoxFull(ItemStack box) {
+        List<ItemStack> items = getBoxItemStacks(box);
+        return items.stream().filter(stack -> stack.getMaxStackSize() - stack.getCount() != 0).toList().isEmpty();
+    }
+
+    public static boolean isBoxEmpty(ItemStack box) {
+        return getBoxItemStacks(box).isEmpty();
+    }
+
+    public static int checkRemainCount(Item item) {
+        LocalPlayer localPlayer = MCUtils.getLocalPlayer();
+        if (localPlayer == null)
+            return 0;
+        int storedCount = getNotEmptyBoxIndexes(getAllBoxIndex(0, 36)).stream().flatMap(i -> getBoxItemStacks(getInventory().get(i)).stream()).filter(j -> j.is(item)).mapToInt(ItemStack::getCount).sum();
+        return storedCount + getInventoryItemCount(item);
+    }
+
+    public static ItemStack getPlayerMainHandStack() {
+        return getPlayerHandStack(InteractionHand.MAIN_HAND);
+    }
+
+    public static ItemStack getPlayerHandStack(InteractionHand hand) {
+        LocalPlayer player = MCUtils.getMinecraft().player;
+        return player == null ? ItemStack.EMPTY : player.getItemInHand(hand);
+    }
+
+    public static boolean isSurvivalMode() {
+        return isSurvivalMode(MCUtils.getLocalPlayer());
+    }
+
+    public static boolean isSurvivalMode(Player player) {
+        return player != null && !player.isCreative() && !player.isSpectator();
+    }
+
+    public static boolean isShulkerBox(ItemStack stack) {
+        return stack.getItem() instanceof BlockItem bi && bi.getBlock() instanceof ShulkerBoxBlock;
+    }
+
+    public static void closeContainer() {
+        LocalPlayer player = MCUtils.getLocalPlayer();
+        if (player != null) {
+            player.closeContainer();
+        }
+    }
+
+    public static void clickSlot(final int containerId, final int slotNum, final int buttonNum,
+                                 final Object input, final Player player) {
+        Minecraft mc = MCUtils.getMinecraft();
+//#if MC>=260101
+        mc.gameMode.handleContainerInput(containerId, slotNum, buttonNum,
+                (net.minecraft.world.inventory.ContainerInput) input, player);
+//#else
+        //$$ mc.gameMode.handleInventoryMouseClick(containerId, slotNum, buttonNum,
+        //$$         (net.minecraft.world.inventory.ClickType) input, player);
+//#endif
+    }
+
+    public static void interactWith(Entity entity, InteractionHand hand) {
+        LocalPlayer player = MCUtils.getLocalPlayer();
+        Minecraft mc = MCUtils.getMinecraft();
+        if (player != null) {
+//#if MC>=260101
+            mc.gameMode.interact(player, entity, new EntityHitResult(entity), hand);
+//#else
+            //$$ mc.gameMode.interact(player, entity, hand);
+//#endif
+        }
+    }
+
+    public static String getName(Player player) {
+//#if MC>=12110
+        return player.getGameProfile().name();
+//#else
+        //$$ return player.getGameProfile().getName();
+//#endif
+    }
+
+    public static String getName(GameProfile profile) {
+//#if MC>=12110
+        return profile.name();
+//#else
+        //$$ return profile.getName();
+//#endif
+    }
+
+    public static boolean isFakePlayer(String playerName) {
+        var info = getPlayerInfo(playerName);
+        return isFakePlayer(info);
+    }
+
+    public static boolean isFakePlayer(PlayerInfo info) {
+        return info != null && info.getLatency() == 0;
+    }
+
+    public static PlayerInfo getPlayerInfo(String playerName) {
+        var connection = MCUtils.getConnection();
+
+        if (connection == null)
+            return null;
+
+        return connection.getPlayerInfo(playerName);
+    }
+}
