@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "id": "${id}",
+  "version": "${version}",
+  "name": "${name}",
+  "description": "${description}",
+  "authors": ["Antideath", "jasonxue"],
+  "contact": {
+    "homepage": "${website}",
+    "issues": "${issues}",
+    "sources": "${source}"
+  },
+  "license": "GPL-3.0-only",
+  "environment": "*",
+  "entrypoints": {
+    "client": ["com.sguserver.remotebotfetch.client.ClientMod"],
+    "modmenu": ["com.sguserver.remotebotfetch.client.config.ModMenu"]
+  },
+  "mixins": ["remote-bot-fetch.mixins.json"],
+  "depends": {
+    "fabricloader": "*",
+    "minecraft": "${minecraft_dependency}",
+    "remote-bot-fetch-server": "*",
+    "malilib": "*",
+    "fabric-lifecycle-events-v1": "*",
+    "fabric-message-api-v1": "*"
+  },
+  "suggests": {
+    "litematica": "*",
+    "modmenu": "*"
+  },
+  "custom": {
+    "modmenu": {
+      "links": {
+        "modmenu.website": "${website}",
+        "modmenu.modrinth": "${modrinth}",
+        "modmenu.curseforge": "${curseforge}",
+        "modmenu.github_releases": "${source}/releases",
+        "modmenu.issues": "${issues}"
+      },
+      "update_checker": true
+    }
+  }
+}
