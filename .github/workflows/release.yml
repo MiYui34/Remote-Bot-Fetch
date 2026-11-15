@@ -174,12 +174,12 @@ jobs:
         uses: Kira-NT/mc-publish@v3.3
         with:
           # https://modrinth.com/settings/pats
-          # modrinth-id:
-          # modrinth-token: ${{ secrets.MODRINTH_API_TOKEN }}
+          modrinth-id: WTPbXrOy
+          modrinth-token: ${{ secrets.MODRINTH_API_TOKEN }}
 
           # https://legacy.curseforge.com/account/api-tokens
-          # curseforge-id:
-          # curseforge-token: ${{ secrets.CF_API_TOKEN }}
+          curseforge-id: 1807783
+          curseforge-token: ${{ secrets.CF_API_TOKEN }}
 
           github-tag: ${{ steps.release_info.outputs.tag_name }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
@@ -194,7 +194,9 @@ jobs:
           game-versions: ${{ steps.properties_v.outputs.gameVersions }}
           game-version-filter: any
           dependencies: |-
+            malilib(required){modrinth:GcWjdA9I}{curseforge:303119}
             carpet(required){modrinth:TQTTVgYE}{curseforge:349239}
+            fabric-api(required){modrinth:P7dR8mSH}{curseforge:306612}
           github-changelog: ${{ steps.get_release.outputs.body }}
           modrinth-changelog: ${{ steps.changelog.outputs.result }}
           curseforge-changelog: ${{ steps.changelog.outputs.result }}
