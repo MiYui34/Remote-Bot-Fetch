@@ -1,0 +1,521 @@
+---
+import "../styles/global.css";
+
+const nav = [
+  { href: "#flow", label: "流程" },
+  { href: "#features", label: "功能" },
+  { href: "#panel", label: "界面" },
+  { href: "#install", label: "安装" },
+  { href: "#commands", label: "命令" },
+  { href: "#versions", label: "版本" },
+];
+
+const platforms = [
+  {
+    name: "GitHub",
+    meta: "源码",
+    brand: "#ffffff",
+    href: "https://github.com/SGU-Server/Remote-Bot-Fetch",
+    path: "M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12",
+  },
+  {
+    name: "Modrinth",
+    meta: "发布",
+    brand: "#1bd96a",
+    href: "https://modrinth.com/mod/remote-bot-fetch",
+    path: "M12.252.004a11.78 11.768 0 0 0-8.92 3.73 11 10.999 0 0 0-2.17 3.11 11.37 11.359 0 0 0-1.16 5.169c0 1.42.17 2.5.6 3.77.24.759.77 1.899 1.17 2.529a12.3 12.298 0 0 0 8.85 5.639c.44.05 2.54.07 2.76.02.2-.04.22.1-.26-1.7l-.36-1.37-1.01-.06a8.5 8.489 0 0 1-5.18-1.8 5.34 5.34 0 0 1-1.3-1.26c0-.05.34-.28.74-.5a37.572 37.545 0 0 1 2.88-1.629c.03 0 .5.45 1.06.98l1 .97 2.07-.43 2.06-.43 1.47-1.47c.8-.8 1.48-1.5 1.48-1.52 0-.09-.42-1.63-.46-1.7-.04-.06-.2-.03-1.02.18-.53.13-1.2.3-1.45.4l-.48.15-.53.53-.53.53-.93.1-.93.07-.52-.5a2.7 2.7 0 0 1-.96-1.7l-.13-.6.43-.57c.68-.9.68-.9 1.46-1.1.4-.1.65-.2.83-.33.13-.099.65-.579 1.14-1.069l.9-.9-.7-.7-.7-.7-1.95.54c-1.07.3-1.96.53-1.97.53-.03 0-2.23 2.48-2.63 2.97l-.29.35.28 1.03c.16.56.3 1.16.31 1.34l.03.3-.34.23c-.37.23-2.22 1.3-2.84 1.63-.36.2-.37.2-.44.1-.08-.1-.23-.6-.32-1.03-.18-.86-.17-2.75.02-3.73a8.84 8.839 0 0 1 7.9-6.93c.43-.03.77-.08.78-.1.06-.17.5-2.999.47-3.039-.01-.02-.1-.02-.2-.03Zm3.68.67c-.2 0-.3.1-.37.38-.06.23-.46 2.42-.46 2.52 0 .04.1.11.22.16a8.51 8.499 0 0 1 2.99 2 8.38 8.379 0 0 1 2.16 3.449 6.9 6.9 0 0 1 .4 2.8c0 1.07 0 1.27-.1 1.73a9.37 9.369 0 0 1-1.76 3.769c-.32.4-.98 1.06-1.37 1.38-.38.32-1.54 1.1-1.7 1.14-.1.03-.1.06-.07.26.03.18.64 2.56.7 2.78l.06.06a12.07 12.058 0 0 0 7.27-9.4c.13-.77.13-2.58 0-3.4a11.96 11.948 0 0 0-5.73-8.578c-.7-.42-2.05-1.06-2.25-1.06Z",
+  },
+  {
+    name: "CurseForge",
+    meta: "发布",
+    brand: "#f16436",
+    href: "https://www.curseforge.com/minecraft/mc-mods/remote-bot-fetch",
+    path: "M18.326 9.2145S23.2261 8.4418 24 6.1882h-7.5066V4.4H0l2.0318 2.3576V9.173s5.1267-.2665 7.1098 1.2372c2.7146 2.516-3.053 5.917-3.053 5.917L5.0995 19.6c1.5465-1.4726 4.494-3.3775 9.8983-3.2857-2.0565.65-4.1245 1.6651-5.7344 3.2857h10.9248l-1.0288-3.2726s-7.918-4.6688-.8336-7.1127z",
+  },
+];
+
+const steps = [
+  {
+    title: "提出请求",
+    body: "物品与数量被整理成一次取货请求，交给服务端校验权限、单次上限与玩家限速。不合规的请求当场拒绝，并说明原因。",
+    icon: "M4 6h9M4 12h6M4 18h9M16 9l4 3-4 3z",
+  },
+  {
+    title: "假人出仓",
+    body: "服务端按配置的前缀召唤取物假人，让它们逐个打开仓储容器，把物品取到假人背包。调用间隔与假人数量都可以限制。",
+    icon: "M4 7h16a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1zM12 7V3.5M12 2.2v.6M9.5 12.5v1M14.5 12.5v1",
+  },
+  {
+    title: "物品回手",
+    body: "结果按请求来源送回玩家物品栏。投影材料列表读取同一份数据，已取数量随即生效，不必再翻箱子核对。",
+    icon: "M4 8.5 12 4l8 4.5v7L12 20l-8-4.5zM4 8.5 12 13l8-4.5M12 13v7",
+  },
+];
+
+const features = [
+  {
+    title: "背包里的取货面板",
+    body: "物品栏的配方书按钮就是开关。面板开启时原版配方书让位，左侧换成取货用的分类标签、搜索框、刷新按钮、九列网格与滚动条。",
+  },
+  {
+    title: "与创造模式一致的取放",
+    body: "点一下物品悬浮在鼠标上，左键加一、右键减一、Shift 加左键取整组、中键克隆整组；移出面板后左键取一组，右键取一潜影盒。",
+  },
+  {
+    title: "库存写在悬停里",
+    body: "鼠标停在物品上即可看到仓储中的库存数量。取货仍然走服务端的取物与查询命令，客户端不绕过任何校验。",
+  },
+  {
+    title: "投影材料列表联动",
+    body: "中键点击原理图里缺少的方块会立即取货，Shift 加中键取一盒。材料列表可以统计全部物品，也可以把假人背包算进去。",
+  },
+  {
+    title: "假人背包缓存",
+    body: "打开过的假人背包会被缓存，投影取货时优先从缓存中取，省去反复开关容器的步骤。缓存支持白名单与手动清理。",
+  },
+  {
+    title: "服务端规则把关",
+    body: "取物命令、查询命令、假人前缀、容器调用间隔、玩家限速与单次上限，都由 Carpet 规则控制，权限可以按需开放。",
+  },
+];
+
+const commands = [
+  {
+    cmd: "/getItem <item> <count>",
+    body: "从仓储取出指定物品，完成后按假人分组回报结果。",
+  },
+  {
+    cmd: "/getItem <item> <count> nbt",
+    body: "以 NBT 列表返回 name、id、count；失败时给出 maxCount 或 waitSecond。",
+  },
+  {
+    cmd: "/getStorageData [id]",
+    body: "扫描全部已配置仓储，合并同名物品的总数，潜影盒按内容递归计数。",
+  },
+  {
+    cmd: "/cleanGetItemBot view",
+    body: "查看仍留有物品的取物假人数量，再用 clean 加数量批量清理。",
+  },
+];
+
+const versions = ["1.21.1", "1.21.3", "1.21.4", "1.21.5", "1.21.8", "1.21.10", "1.21.11", "26.1.2", "26.2", "26.3"];
+---
+
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Remote Bot Fetch</title>
+    <meta
+      name="description"
+      content="Remote Bot Fetch 让服务端调度假人从仓储取货，客户端把取货接入物品栏与 Litematica 投影材料列表。支持 Minecraft 1.21.1 至 26.3。"
+    />
+    <meta name="theme-color" content="#08090D" />
+    <meta property="og:title" content="Remote Bot Fetch" />
+    <meta property="og:description" content="假人替你从仓库取货。服务端调度与校验，客户端接回物品栏与投影材料列表。" />
+    <meta property="og:type" content="website" />
+    <link rel="icon" href="/favicon.png" type="image/png" />
+    <link rel="preload" href="/fonts/inter-600.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/inter-400.woff2" as="font" type="font/woff2" crossorigin />
+  </head>
+  <body>
+    <a class="skip" href="#main">跳到正文</a>
+
+    <header class="site-head">
+      <div class="wrap head-shell">
+        <a class="wordmark" href="#top">Remote Bot Fetch</a>
+        <nav class="nav" aria-label="页面导航">
+          {nav.map((item) => <a href={item.href}>{item.label}</a>)}
+        </nav>
+        <a class="head-cta" href="#install">获取模组</a>
+        <details class="nav-more">
+          <summary aria-label="展开导航"><span></span><span></span></summary>
+          <nav aria-label="页面导航">
+            {nav.map((item) => <a href={item.href}>{item.label}</a>)}
+          </nav>
+        </details>
+      </div>
+    </header>
+
+    <main id="main">
+      <section class="hero" id="top">
+        <div class="hero-glow" aria-hidden="true"></div>
+        <div class="wrap hero-grid">
+          <div class="hero-copy">
+            <p class="hero-eyebrow">
+              <span class="tag">v0.1.0</span>
+              <span class="tag-note">支持 Minecraft 1.21.1 至 26.3</span>
+            </p>
+
+            <h1 class="hero-title">
+              <span class="hero-line"><span>Remote Bot</span></span>
+              <span class="hero-line"><span>Fetch</span></span>
+            </h1>
+
+            <p class="hero-lede">
+              假人替你走到仓库前取货。服务端负责调度与校验，客户端把物品接回物品栏，并同步到投影材料列表。
+            </p>
+
+            <div class="hero-actions">
+              {
+                platforms.map((p) => (
+                  <a
+                    class="btn-plat"
+                    style={`--brand: ${p.brand}`}
+                    href={p.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <svg class="brand-logo" viewBox="0 0 24 24" aria-hidden="true">
+                      <path d={p.path} />
+                    </svg>
+                    <span class="plat-name">{p.name}</span>
+                    <span class="plat-meta">{p.meta}</span>
+                  </a>
+                ))
+              }
+            </div>
+
+            <p class="hero-note">GitHub 存放源码与问题记录，Modrinth 与 CurseForge 提供发布版本。</p>
+          </div>
+
+          <figure class="flow-panel">
+            <svg viewBox="0 0 440 436" role="img" aria-label="取货流程示意：仓储、假人、物品栏">
+              <text class="svg-label" x="80" y="14">仓储</text>
+              <text class="svg-count" x="360" y="14" text-anchor="end">24 组</text>
+              <g transform="translate(80 26)">
+                {
+                  [0, 1, 2, 3].map((i) => (
+                    <g transform={`translate(${i * 72} 0)`}>
+                      <rect class="slot" width="64" height="64" rx="8" />
+                      <rect class="slot-item" x="19" y="19" width="26" height="26" rx="3" />
+                    </g>
+                  ))
+                }
+              </g>
+
+              <g class="flow-link">
+                <path class="dash" d="M220 98 V 140" />
+                <path class="arrow" d="M215 134 L220 141 L225 134" />
+                <rect class="token token-a" x="214" y="100" width="12" height="12" rx="3" />
+              </g>
+
+              <rect class="bot-box" x="95" y="150" width="250" height="96" rx="14" />
+              <g class="bot">
+                <line class="bot-antenna" x1="135" y1="172" x2="135" y2="164" />
+                <circle class="bot-dot" cx="135" cy="162" r="2.5" />
+                <rect class="bot-head" x="119" y="172" width="32" height="28" rx="6" />
+                <rect class="bot-eye" x="127" y="183" width="5" height="5" rx="1" />
+                <rect class="bot-eye" x="139" y="183" width="5" height="5" rx="1" />
+              </g>
+              <text class="svg-title" x="167" y="190">假人</text>
+              <text class="svg-mono" x="167" y="208">bot_getitem_1</text>
+              <text class="svg-count" x="325" y="190" text-anchor="end">x1</text>
+
+              <g class="flow-link">
+                <path class="dash" d="M220 254 V 296" />
+                <path class="arrow" d="M215 290 L220 297 L225 290" />
+                <rect class="token token-b" x="214" y="256" width="12" height="12" rx="3" />
+              </g>
+
+              <text class="svg-label" x="29" y="330">物品栏</text>
+              <text class="svg-count" x="411" y="330" text-anchor="end"><tspan class="count">256</tspan> 个</text>
+              <g class="inv" transform="translate(29 340)">
+                {
+                  Array.from({ length: 18 }, (_, i) => (
+                    <rect
+                      class={i === 5 ? "inv-slot inv-slot-hit" : "inv-slot"}
+                      x={(i % 9) * 43}
+                      y={Math.floor(i / 9) * 43}
+                      width="38"
+                      height="38"
+                      rx="6"
+                    />
+                  ))
+                }
+                <path class="inv-gem" d="M234 8 L243 19 L234 30 L225 19 Z" />
+              </g>
+            </svg>
+            <figcaption class="flow-caption">
+              <span class="flow-state" aria-hidden="true"></span>
+              <span>服务端调度，客户端接回</span>
+            </figcaption>
+          </figure>
+        </div>
+
+        <div class="wrap">
+          <dl class="hero-meta">
+            <div><dt>支持版本</dt><dd>1.21.1 至 26.3</dd></div>
+            <div><dt>构建形态</dt><dd>单一 jar，两端通用</dd></div>
+            <div>
+              <dt>授权</dt>
+              <dd>
+                <a class="meta-link" href="https://www.gnu.org/licenses/gpl-3.0.html" target="_blank" rel="noopener noreferrer"
+                  >GPL-3.0-only</a
+                >
+              </dd>
+            </div>
+            <div><dt>必要依赖</dt><dd>Fabric Loader 与 Carpet</dd></div>
+          </dl>
+        </div>
+      </section>
+
+      <section class="section" id="flow">
+        <div class="wrap">
+          <header class="sec-head">
+            <h2 class="sec-title">一次取货，三步走完</h2>
+            <p class="sec-note">无论从面板点选、命令触发还是投影中键，最终都走同一条取货路径，结果也一致。</p>
+          </header>
+
+          <div class="steps">
+            {
+              steps.map((step) => (
+                <article class="step-card">
+                  <span class="step-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                      <path d={step.icon} />
+                    </svg>
+                  </span>
+                  <h3>{step.title}</h3>
+                  <p>{step.body}</p>
+                </article>
+              ))
+            }
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="features">
+        <div class="wrap">
+          <header class="sec-head">
+            <h2 class="sec-title">面板、投影与假人背包</h2>
+            <p class="sec-note">客户端负责交互，服务端负责执行；两端可以一起安装，也可以只装其中一端。</p>
+          </header>
+
+          <div class="feature-grid">
+            {
+              features.map((f) => (
+                <article class="feature">
+                  <h3>{f.title}</h3>
+                  <p>{f.body}</p>
+                </article>
+              ))
+            }
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="panel">
+        <div class="wrap">
+          <header class="sec-head">
+            <h2 class="sec-title">在物品栏左侧工作</h2>
+            <p class="sec-note">面板复用原版创造模式的分类、搜索与网格布局，原有的操作习惯不必重新学。</p>
+          </header>
+
+          <div class="panel-grid">
+            <div class="panel-copy">
+              <p class="lead">打开物品栏，按下配方书按钮，左侧就会出现另一间仓库。搜索、翻页、取值都在这一屏里完成。</p>
+              <ul class="ticks">
+                <li>配方书按钮开关面板，热键打开配置界面</li>
+                <li>悬停显示库存，取货仍在服务端完成</li>
+                <li>中键投影取货，Shift 加中键取一盒</li>
+                <li>面板可在配置界面里单独关闭</li>
+              </ul>
+              <p class="panel-foot">配图取自游戏内实录，界面语言为简体中文。</p>
+            </div>
+
+            <figure class="shot">
+              <div class="shot-frame">
+                <img
+                  src="/panel.png"
+                  width="1240"
+                  height="659"
+                  alt="Minecraft 物品栏界面，左侧为 Remote Bot Fetch 取货面板，包含搜索框、刷新按钮与九列物品网格；右侧为玩家物品栏与假人背包。"
+                />
+              </div>
+              <figcaption class="shot-caption">取货面板与玩家物品栏</figcaption>
+            </figure>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="install">
+        <div class="wrap">
+          <header class="sec-head">
+            <h2 class="sec-title">一个文件，两端通用</h2>
+            <p class="sec-note">同一个 jar 同时包含服务端与客户端逻辑，加载时按运行环境分别初始化。</p>
+          </header>
+
+          <div class="get-panel">
+            <div class="get-main">
+              <div class="jar-head">
+                <span class="badge">通用文件</span>
+                <p class="jar-file">remote-bot-fetch-v0.1.0-mc&lt;版本&gt;.jar</p>
+              </div>
+              <dl class="spec">
+                <div><dt>模组 id</dt><dd>remote-bot-fetch</dd></div>
+                <div><dt>环境</dt><dd>客户端与服务端</dd></div>
+                <div><dt>依赖</dt><dd>Fabric Loader、Carpet</dd></div>
+                <div><dt>可选</dt><dd>MaLiLib、Fabric API、Litematica、Mod Menu</dd></div>
+              </dl>
+              <p class="jar-use">同一个文件放进客户端和服务端的 mods 目录。服务端部分只在服务端初始化，客户端部分只在客户端初始化。</p>
+            </div>
+
+            <div class="get-side">
+              <a class="get-btn is-main" href="https://modrinth.com/mod/remote-bot-fetch" target="_blank" rel="noopener noreferrer">
+                <svg class="brand-logo" viewBox="0 0 24 24" aria-hidden="true"><path d={platforms[1].path} /></svg>
+                <span>在 Modrinth 下载</span>
+              </a>
+              <a class="get-btn" href="https://www.curseforge.com/minecraft/mc-mods/remote-bot-fetch" target="_blank" rel="noopener noreferrer">
+                <svg class="brand-logo" viewBox="0 0 24 24" aria-hidden="true"><path d={platforms[2].path} /></svg>
+                <span>在 CurseForge 下载</span>
+              </a>
+              <p class="dl-hint">按需选择对应游戏版本</p>
+            </div>
+          </div>
+
+          <p class="install-note">客户端缺少 MaLiLib 或 Fabric API 时，模组会打印错误并停用客户端功能，不会让游戏崩溃。</p>
+
+          <ol class="install-steps">
+            <li>
+              <h3>准备 Fabric</h3>
+              <p>按游戏版本安装 Fabric Loader，并把 Carpet 放进 mods 目录。</p>
+            </li>
+            <li>
+              <h3>放入模组</h3>
+              <p>把下载到的 jar 分别放进客户端与服务端的 mods 目录。</p>
+            </li>
+            <li>
+              <h3>开始取货</h3>
+              <p>进入游戏，在物品栏点击配方书按钮唤出面板；配置界面用热键打开。</p>
+            </li>
+          </ol>
+        </div>
+      </section>
+
+      <section class="section" id="commands">
+        <div class="wrap">
+          <header class="sec-head">
+            <h2 class="sec-title">命令与 NBT 结果</h2>
+            <p class="sec-note">取货、查询与假人清理都能用命令完成，方便红石服与自动化工具直接调用。</p>
+          </header>
+
+          <div class="cmd-grid">
+            <div class="cmd-list">
+              {
+                commands.map((c) => (
+                  <div class="cmd">
+                    <code>{c.cmd}</code>
+                    <p>{c.body}</p>
+                  </div>
+                ))
+              }
+            </div>
+
+            <div class="code-card">
+              <div class="code-head">
+                <span class="code-label">NBT 输出</span>
+                <span class="code-cmd">/getItem minecraft:oak_planks 256 nbt</span>
+              </div>
+              <pre><code>[
+  &#123;
+    <span class="k">name</span>: <span class="s">"bot_getitem_1"</span>,
+    <span class="k">id</span>: <span class="s">"minecraft:oak_planks"</span>,
+    <span class="k">count</span>: <span class="n">64</span>
+  &#125;,
+  &#123;
+    <span class="k">name</span>: <span class="s">"bot_getitem_2"</span>,
+    <span class="k">id</span>: <span class="s">"minecraft:oak_planks"</span>,
+    <span class="k">count</span>: <span class="n">64</span>
+  &#125;
+]</code></pre>
+              <p class="code-note">没有取到物品时返回空列表。数量越界返回 maxCount，触发限速返回 waitSecond。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="versions">
+        <div class="wrap ver-grid">
+          <div>
+            <header class="sec-head">
+              <h2 class="sec-title">覆盖 1.21.1 至 26.3</h2>
+            </header>
+            <ul class="versions">
+              {versions.map((v) => <li>{v}</li>)}
+            </ul>
+          </div>
+
+          <div class="version-notes">
+            <p>1.21.0、1.21.2、1.21.6、1.21.7、1.21.9、26.1、26.1.1 由相邻版本的依赖范围覆盖，不需要单独安装。</p>
+            <p>
+              已知取舍：1.21.1 使用 1.21 构建的 MaLiLib 与 Litematica；1.21.x 的搜索框不支持输入法预编辑，配置界面在这几个版本里需要用热键打开。
+            </p>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-foot">
+      <div class="wrap">
+        <div class="foot-top">
+          <div class="foot-brand">
+            <p class="foot-title">Remote Bot Fetch</p>
+            <p class="foot-lede">让假人从仓储取货，把结果接回物品栏与 Litematica 投影材料列表。</p>
+            <ul class="foot-platforms" aria-label="项目页面">
+              {
+                platforms.map((p) => (
+                  <li>
+                    <a href={p.href} target="_blank" rel="noopener noreferrer" aria-label={p.name} style={`--brand: ${p.brand}`}>
+                      <svg viewBox="0 0 24 24" aria-hidden="true"><path d={p.path} /></svg>
+                    </a>
+                  </li>
+                ))
+              }
+            </ul>
+          </div>
+
+          <nav class="foot-cols" aria-label="页脚链接">
+            <div class="foot-col">
+              <p class="foot-col-title">项目</p>
+              <a href="https://github.com/SGU-Server/Remote-Bot-Fetch" target="_blank" rel="noopener noreferrer">源代码</a>
+              <a href="https://github.com/SGU-Server/Remote-Bot-Fetch/issues" target="_blank" rel="noopener noreferrer">问题反馈</a>
+              <a href="https://github.com/SGU-Server/Remote-Bot-Fetch/releases" target="_blank" rel="noopener noreferrer">发布记录</a>
+            </div>
+            <div class="foot-col">
+              <p class="foot-col-title">下载</p>
+              <a href="https://modrinth.com/mod/remote-bot-fetch" target="_blank" rel="noopener noreferrer">Modrinth</a>
+              <a href="https://www.curseforge.com/minecraft/mc-mods/remote-bot-fetch" target="_blank" rel="noopener noreferrer">CurseForge</a>
+            </div>
+            <div class="foot-col">
+              <p class="foot-col-title">相关</p>
+              <a href="https://github.com/gnembon/fabric-carpet" target="_blank" rel="noopener noreferrer">Carpet</a>
+              <a href="https://github.com/sakura-ryoko/litematica" target="_blank" rel="noopener noreferrer">Litematica</a>
+              <a href="https://www.curseforge.com/minecraft/mc-mods/malilib" target="_blank" rel="noopener noreferrer">MaLiLib</a>
+            </div>
+            <div class="foot-col">
+              <p class="foot-col-title">版本</p>
+              <p class="foot-plain">0.1.0</p>
+              <p class="foot-plain">
+                <a href="https://www.gnu.org/licenses/gpl-3.0.html" target="_blank" rel="noopener noreferrer">GPL-3.0-only</a>
+              </p>
+              <p class="foot-plain">1.21.1 至 26.3</p>
+            </div>
+          </nav>
+        </div>
+
+        <div class="foot-bottom">
+          <p>© 2026 Remote Bot Fetch，由 SGU Server 维护。</p>
+          <p>Minecraft 是 Mojang Studios 的商标，本站与 Mojang Studios 及 Microsoft 没有隶属关系。</p>
+        </div>
+      </div>
+    </footer>
+
+    <script is:inline>
+      document.querySelector(".nav-more").addEventListener("click", (event) => {
+        if (event.target.closest("a")) event.currentTarget.open = false;
+      });
+    </script>
+  </body>
+</html>
