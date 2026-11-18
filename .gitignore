@@ -47,3 +47,14 @@ __pycache__
 
 # gemini
 .gemini/
+
+# homepage
+
+homepage/dist/
+homepage/.astro/
+# local scratch
+
+/_pr/
+/_logo/
+/dist/
+/deploy/
