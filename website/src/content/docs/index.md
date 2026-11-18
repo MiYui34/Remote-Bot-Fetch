@@ -4,7 +4,7 @@ description: "Welcome to the official website"
 pagefind: false
 template: splash
 hero:
-  title: "Remote Bot Fetch"
+  title: "测试 Remote Bot Fetch"
   tagline: "Welcome to the official website"
   actions:
     - text: "Introduction"
